@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    /* 文本颜色 */
+    --text-primary-color: #303133 !important;
+}
+
+/* default style */
+.text-info {
+    color: #909399 !important;
+}
+
+.text-info-600 {
+    color: #73767a !important;
+}
+
+.text-info-500 {
+    color: #b1b3b8 !important;
+}
+
+/* hover style */
+.text-info:hover {
+    color: #73767a !important;
+}
+
+/* trigger content style */
+.trigger-box {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100px;
+    background-color: var(--color-bg-popup);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+}
