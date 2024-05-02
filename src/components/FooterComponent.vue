@@ -4,7 +4,7 @@ import { footerIconSize } from '@/assets/common';
 
 <template>
   <div class="w-full bg-slate-100">
-    <div class="mx-auto max-w-7xl min-h-14 flex items-center justify-between">
+    <div class="mx-auto max-w-96 sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl min-h-14 flex items-center justify-between">
       <!-- 版权 -->
       <div class="flex flex-col">
         <a-typography-text>Copyright &copy; 2020 - 2024 Jackie Yang</a-typography-text>

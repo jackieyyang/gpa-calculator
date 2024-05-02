@@ -5,6 +5,7 @@ import {IconSearch} from "@arco-design/web-vue/es/icon";
 import {i18n} from "@/locale";
 import {downloadExcel, readExcel} from "@/hooks/excel";
 
+const width = ref(0);
 const height = ref(0);
 const uploadRef = ref();
 const files = ref([]);
@@ -74,6 +75,41 @@ const columns: any = [{
   dataIndex: 'operation',
   slotName: 'operation',
 }];
+const columnsLg: any = [{
+  title: i18n.global.t('courseName'),
+  dataIndex: '课程名称',
+  ellipsis: true,
+  filterable: {
+    filter: (value: any, record: any) => record.课程名称.includes(value),
+    slotName: 'name-filter',
+    icon: () => h(IconSearch)
+  }
+}, {
+  title: i18n.global.t('credit'),
+  dataIndex: '学分',
+  slotName: 'credit',
+  sortable: {
+    sortDirections: ['ascend', 'descend']
+  }
+}, {
+  title: i18n.global.t('gpa'),
+  dataIndex: '绩点',
+  slotName: 'gpa',
+  sortable: {
+    sortDirections: ['ascend', 'descend']
+  }
+}, {
+  title: i18n.global.t('score'),
+  dataIndex: '成绩',
+  slotName: 'score',
+  sortable: {
+    sortDirections: ['ascend', 'descend']
+  }
+}, {
+  title: i18n.global.t('operation'),
+  dataIndex: 'operation',
+  slotName: 'operation',
+}];
 const paginationProps: PaginationProps = {
   showTotal: true,
   showJumper: true,
@@ -90,15 +126,16 @@ const summary = ref<any>({
 });
 
 onMounted(async () => {
-  updateHeight();
-  window.addEventListener('resize', updateHeight);
+  updateSize();
+  window.addEventListener('resize', updateSize);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', updateHeight);
+  window.removeEventListener('resize', updateSize);
 });
 
-const updateHeight = () => {
+const updateSize = () => {
+  width.value = window.innerWidth;
   height.value = window.innerHeight - 112;
 };
 
@@ -189,13 +226,14 @@ watchEffect(() => {
 
 <template>
   <div class="w-full h-full">
-    <div class="mx-auto max-w-7xl box-border py-10 flex flex-col" :style="{ minHeight: height + 'px' }">
+    <div class="mx-auto max-w-96 sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl box-border py-10 flex flex-col"
+         :style="{ minHeight: height + 'px' }">
 
       <!-- 筛选栏 -->
-      <div class="w-full mb-5 flex flex-row justify-between">
+      <div class="w-full mb-5 flex flex-col lg:flex-row justify-between">
 
         <!-- 左侧选择 -->
-        <div class="flex flex-col">
+        <div class="flex flex-col mb-4 lg:mb-0">
           <div class="flex flex-row mb-4 gap-4">
             <a-button type="primary" shape="round" @click="addFormVisible=true">{{ $t('addNewCourse') }}</a-button>
             <a-button type="primary" shape="round" @click="recoverTable">{{ $t('recoverTable') }}</a-button>
@@ -229,22 +267,24 @@ watchEffect(() => {
 
         <!-- 成绩显示 -->
         <div class="flex flex-col">
-          <div class="flex flex-row gap-4 justify-end">
+          <div class="flex flex-row gap-4 justify-start lg:justify-end">
             <a-typography-text>{{ $t('averageGpa') }}: {{ summary.averageGpa }}</a-typography-text>
             <a-typography-text>{{ $t('averageScore') }}: {{ summary.averageScore }}</a-typography-text>
           </div>
-          <div class="flex flex-row gap-4 justify-end">
+          <div class="flex flex-row gap-4 justify-start lg:justify-end">
             <a-typography-text>{{ $t('weightedGpa') }}: {{ summary.weightedGpa }}</a-typography-text>
             <a-typography-text>{{ $t('weightedScore') }}: {{ summary.weightedScore }}</a-typography-text>
           </div>
-          <div class="flex flex-row justify-end"><a-typography-text>{{ $t('totalCredits') }}: {{ summary.totalCredits }}</a-typography-text></div>
+          <div class="flex flex-row justify-start lg:justify-end">
+            <a-typography-text>{{ $t('totalCredits') }}: {{ summary.totalCredits }}</a-typography-text>
+          </div>
         </div>
 
       </div>
 
       <!-- 表单 -->
       <div class="w-full">
-        <a-table :columns="columns" :data="data" :pagination="paginationProps">
+        <a-table :columns="width>1024? columns: columnsLg" :data="data" :pagination="width>1024?paginationProps: undefined">
           <template #name-filter="{ filterValue, setFilterValue, handleFilterConfirm, handleFilterReset}">
             <div class="custom-filter">
               <a-space direction="vertical">
