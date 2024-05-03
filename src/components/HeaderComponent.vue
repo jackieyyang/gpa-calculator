@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {headerIconSize, headerLogoSize, iconFont} from "@/assets/common";
 import {useLocale} from "@/hooks/locale";
+import logo from "@/assets/logo-blue.png";
 
 const refresh = () => {
   window.location.reload();
@@ -12,7 +13,7 @@ const refresh = () => {
     <div class="mx-auto max-w-96 sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl min-h-14 flex items-center justify-between">
       <!-- logo -->
       <div class="flex flex-row">
-        <icon-bytedance-color :size="headerLogoSize"/>
+        <a-image :src="logo" :width="headerLogoSize" :height="headerLogoSize" fit="contain" />
       </div>
       <!-- 右侧引导栏 -->
       <div class="flex gap-4">
