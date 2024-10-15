@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { footerIconSize } from '@/assets/common';
+const toUrl = (url: string) => {
+  window.open(url, '_blank');
+}
 </script>
 
 <template>
@@ -12,10 +15,10 @@ import { footerIconSize } from '@/assets/common';
       </div>
       <!-- 右侧引导栏 -->
       <div class="flex gap-4">
-        <icon-qq :size="footerIconSize" class="text-info cursor-pointer"/>
-        <icon-wechat :size="footerIconSize" class="text-info cursor-pointer" />
-        <icon-twitter :size="footerIconSize" class="text-info cursor-pointer" />
-        <icon-github :size="footerIconSize" class="text-info cursor-pointer" />
+        <icon-qq :size="footerIconSize" class="text-info cursor-pointer transition-colors"/>
+        <icon-wechat :size="footerIconSize" class="text-info cursor-pointer transition-colors" />
+        <icon-twitter :size="footerIconSize" class="text-info cursor-pointer transition-colors" />
+        <icon-github :size="footerIconSize" class="text-info cursor-pointer transition-colors" @click="toUrl('https://github.com/jackieyyang/gpa-calculator')"/>
       </div>
     </div>
   </div>
